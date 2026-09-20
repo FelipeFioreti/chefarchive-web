@@ -28,6 +28,13 @@ Frontend Angular standalone para o backend [`recipes`](https://github.com/Felipe
 O `proxy.conf.json` encaminha chamadas `/api` para `http://localhost:5184`. Ajuste o alvo se o backend estiver exposto
 em outra porta.
 
+## Deploy
+
+Toda tag `vX.Y.Z` empurrada nesse repositorio builda e publica `ghcr.io/felipefioreti/chefarchive-web`,
+depois chama a [Action da Hostinger](https://github.com/hostinger/deploy-on-vps) para atualizar so o
+projeto `chefarchive-web` na VPS (`deploy/docker-compose.yml`), sem tocar em `api`/`proxy`. Requer o
+secret `HOSTINGER_API_KEY` configurado no repositorio.
+
 ## Repositorios relacionados
 
 - [`FelipeFioreti/recipes`](https://github.com/FelipeFioreti/recipes) — backend ASP.NET Core (API + migrations)
