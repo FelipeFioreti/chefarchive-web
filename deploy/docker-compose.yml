@@ -1,0 +1,15 @@
+name: chefarchive-web
+
+services:
+  web:
+    image: ghcr.io/felipefioreti/chefarchive-web:${WEB_TAG:-latest}
+    container_name: recipes-web
+    restart: unless-stopped
+    networks: [backend]
+    expose:
+      - "80"
+
+networks:
+  backend:
+    external: true
+    name: chefarchive_backend
