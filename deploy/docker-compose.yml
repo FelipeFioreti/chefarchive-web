@@ -9,6 +9,7 @@ services:
     environment:
       VIRTUAL_HOST: chefarchive.felipe-fioreti.tech
       VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: chefarchive.felipe-fioreti.tech
     expose:
       - "80"
 
