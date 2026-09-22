@@ -2,6 +2,9 @@
 
 Frontend Angular standalone para o backend [`recipes`](https://github.com/FelipeFioreti/recipes) (`Recipes.Api`).
 
+Para entender como o ChefArchive inteiro funciona (os 3 repositorios, infra na VPS, deploy, redes),
+veja [`ARCHITECTURE.md` no repositorio `recipes`](https://github.com/FelipeFioreti/recipes/blob/main/ARCHITECTURE.md).
+
 ## Stack
 
 - Angular 21.2.21
