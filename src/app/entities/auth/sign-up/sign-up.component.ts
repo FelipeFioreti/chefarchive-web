@@ -1,18 +1,12 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import {finalize} from 'rxjs';
 import {ApiErrorResponse} from "../../../core/models/api-error.model";
 import {NotificationService} from "../../../core/services/notification.service";
 import {AuthService} from "../../../core/services/auth.service";
-
-function passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
-
-    return password && confirmPassword && password !== confirmPassword ? {passwordMismatch: true} : null;
-}
+import {passwordMatchValidator} from "../../../shared/validators/password-match.validator";
 
 function extractErrorMessage(error: HttpErrorResponse): string {
     const payload = error.error as ApiErrorResponse | null;

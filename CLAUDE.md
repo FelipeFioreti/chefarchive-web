@@ -10,4 +10,4 @@ A documentação de arquitetura de **todo** o ChefArchive (os 3 repositórios: `
 
 Mudanças que só afetam a interface/lógica interna do frontend (um componente novo, um ajuste de estilo) não precisam disso.
 
-Antes de qualquer commit, branch ou PR: siga as convenções descritas no `docs/git-best-practices.md` do `chefarchive-infra` (privado) — commits em inglês, Conventional Commits, sem assinatura de ferramenta.
+Antes de qualquer commit, branch ou PR: siga as convenções descritas no `docs/git-best-practices.md` do `chefarchive-infra` (privado) — commits em português, Conventional Commits, sem assinatura de ferramenta. Branches de trabalho partem da `main` e o PR vai para a `release/X.Y.Z` da versão, nunca direto para a `main`. Criar a tag `vX.Y.Z` dispara o deploy: nunca crie nem envie tags sem pedido explícito.
