@@ -49,6 +49,29 @@ export class AuthService {
             .post<void>(`${this.accountUrl}/register`, payload);
     }
 
+    forgotPassword(payload: {
+        email: string,
+    }): Observable<void> {
+        return this.http
+            .post<void>(`${this.accountUrl}/forgot-password`, payload, {
+                context: new HttpContext()
+                    .set(SKIP_ERROR_TOAST, true)
+                    .set(SKIP_AUTH_REFRESH, true)
+            });
+    }
+
+    resetPassword(payload: {
+        token: string,
+        newPassword: string,
+    }): Observable<void> {
+        return this.http
+            .post<void>(`${this.accountUrl}/reset-password`, payload, {
+                context: new HttpContext()
+                    .set(SKIP_ERROR_TOAST, true)
+                    .set(SKIP_AUTH_REFRESH, true)
+            });
+    }
+
     logout(): void {
         const refreshToken = this.getRefreshToken();
 
