@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageHeaderComponent {
-  readonly eyebrow = input('Resumo');
+  readonly headerText = input('Resumo');
   readonly title = input.required<string>();
   readonly description = input('');
 }

@@ -1,0 +1,10 @@
+:host {
+  display: block;
+}
+
+.form-field-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}

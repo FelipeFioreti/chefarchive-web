@@ -1,41 +1,61 @@
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {finalize} from 'rxjs';
 import {AuthService} from "../../../core/services/auth.service";
 import {NotificationService} from "../../../core/services/notification.service";
 import {ApiErrorResponse} from "../../../core/models/api-error.model";
 import {passwordMatchValidator} from "../../../shared/validators/password-match.validator";
+import {AlertComponent} from "../../../shared/ui/atoms/alert/alert.component";
+import {ButtonComponent} from "../../../shared/ui/atoms/button/button.component";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
+import {AuthLayoutComponent} from "../../../shared/ui/templates/auth-layout/auth-layout.component";
 
-function extractErrorMessage(error: HttpErrorResponse): string {
+function extractErrorMessage(error: HttpErrorResponse, translateService: TranslateService): string {
     if (error.status === HttpStatusCode.TooManyRequests) {
-        return 'Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.';
+        return translateService.instant('auth.errors.tooManyRequests');
     }
 
     if (error.status === HttpStatusCode.BadRequest) {
-        return 'Este link e invalido, ja foi usado ou expirou. Solicite um novo link.';
+        return translateService.instant('auth.resetPassword.expiredLink');
     }
 
     const payload = error.error as ApiErrorResponse | null;
 
-    return payload?.message ?? 'Nao foi possivel redefinir a senha.';
+    return payload?.message ?? translateService.instant('auth.resetPassword.error');
 }
 
 @Component({
     selector: 'app-reset-password',
-    standalone: true,
-    imports: [ReactiveFormsModule, RouterLink],
+    imports: [
+        ReactiveFormsModule,
+        RouterLink,
+        TranslateModule,
+        AuthLayoutComponent,
+        FormFieldComponent,
+        TextInputComponent,
+        ButtonComponent,
+        AlertComponent
+    ],
     templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ResetPasswordComponent {
 
-    readonly token = signal('');
-    readonly isSubmitting = signal(false);
-    readonly errorMessage = signal('');
-    readonly form = this.formBuilder.nonNullable.group(
+    private readonly notificationService = inject(NotificationService);
+    private readonly translateService = inject(TranslateService);
+    private readonly authService = inject(AuthService);
+    private readonly formBuilder = inject(NonNullableFormBuilder);
+    private readonly route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+
+    protected readonly token = signal(this.route.snapshot.queryParamMap.get('token') ?? '');
+    protected readonly isSubmitting = signal(false);
+    protected readonly errorMessage = signal('');
+    protected readonly form = this.formBuilder.group(
         {
             password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(255)]],
             confirmPassword: ['', [Validators.required]]
@@ -43,21 +63,14 @@ export class ResetPasswordComponent {
         {validators: passwordMatchValidator}
     );
 
-    public constructor(
-        private notificationService: NotificationService,
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router) {
-        this.token.set(this.route.snapshot.queryParamMap.get('token') ?? '');
-
+    public constructor() {
         // O token fica so em memoria: tira-lo da URL evita que ele permaneca no historico do navegador.
         if (this.token()) {
             void this.router.navigate([], {relativeTo: this.route, queryParams: {}, replaceUrl: true});
         }
     }
 
-    submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
@@ -72,11 +85,14 @@ export class ResetPasswordComponent {
             .subscribe({
                 next: () => {
                     this.authService.clearSession();
-                    this.notificationService.success('Senha redefinida', 'Entre com a sua nova senha.');
+                    this.notificationService.success(
+                        this.translateService.instant('auth.resetPassword.successTitle'),
+                        this.translateService.instant('auth.resetPassword.successMessage')
+                    );
                     void this.router.navigateByUrl('/auth/login');
                 },
                 error: (error: HttpErrorResponse) => {
-                    this.errorMessage.set(extractErrorMessage(error));
+                    this.errorMessage.set(extractErrorMessage(error, this.translateService));
                 }
             });
     }

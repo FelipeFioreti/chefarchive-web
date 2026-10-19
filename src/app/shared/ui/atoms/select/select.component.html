@@ -1,0 +1,25 @@
+<ng-select
+    [items]="items()"
+    [bindLabel]="bindLabel()"
+    [bindValue]="bindValue()"
+    [multiple]="multiple()"
+    [searchable]="searchable()"
+    [clearable]="clearable()"
+    [appendTo]="appendTo()"
+    [placeholder]="placeholder()"
+    [labelForId]="inputId() || null"
+    [readonly]="readonly()"
+    [class.is-invalid]="isInvalid()"
+    [ngModel]="value()"
+    [disabled]="disabled()"
+    (ngModelChange)="handleChange($event)"
+    (blur)="onTouched()">
+    @if (optionTemplate(); as template) {
+        <ng-template ng-label-tmp let-item="item">
+            <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ $implicit: item }"/>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+            <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{ $implicit: item }"/>
+        </ng-template>
+    }
+</ng-select>

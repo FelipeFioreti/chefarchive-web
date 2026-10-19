@@ -1,7 +1,7 @@
 @if (category(); as currentCategory) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.categories' | translate"
+                [headerText]="'global.menu.categories' | translate"
                 [title]="(currentCategory.id ? 'category.home.editLabel' : 'category.home.createLabel') | translate">
             <button
                     type="button"
@@ -35,20 +35,22 @@
 
                 <div class="row g-4">
                     <div class="col-lg-12">
-                        <label class="form-label required">{{ 'global.field.name' | translate }}</label>
-                        <input type="text" class="form-control" name="Name" maxlength="255" required
-                               formControlName="name"
-                               [ngClass]="{'is-invalid': isInvalidAndTouched('Name')}">
+                        <label class="form-label required" for="name">{{ 'global.field.name' | translate }}</label>
+                        <app-text-input
+                                inputId="name"
+                                formControlName="name"
+                                [maxlength]="255"
+                                [invalid]="isInvalidAndTouched('name')"/>
 
-                        @if (isInvalidAndTouched('Name')) {
+                        @if (isInvalidAndTouched('name')) {
                             <div class="invalid-feedback d-block">
-                                @if (editForm.get('Name')?.errors?.['required']) {
+                                @if (editForm.get('name')?.errors?.['required']) {
                                     <small>{{ 'entity.validation.required' | translate }}</small>
                                 }
-                                @if (editForm.get('Name')?.errors?.['minlength']) {
+                                @if (editForm.get('name')?.errors?.['minlength']) {
                                     <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
                                 }
-                                @if (editForm.get('Name')?.errors?.['maxlength']) {
+                                @if (editForm.get('name')?.errors?.['maxlength']) {
                                     <small>{{ 'entity.validation.maxlength' | translate: {max: 255} }}</small>
                                 }
                             </div>

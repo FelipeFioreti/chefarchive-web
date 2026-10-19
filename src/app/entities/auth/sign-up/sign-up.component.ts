@@ -1,32 +1,50 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {finalize} from 'rxjs';
 import {ApiErrorResponse} from "../../../core/models/api-error.model";
 import {NotificationService} from "../../../core/services/notification.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {passwordMatchValidator} from "../../../shared/validators/password-match.validator";
+import {AlertComponent} from "../../../shared/ui/atoms/alert/alert.component";
+import {ButtonComponent} from "../../../shared/ui/atoms/button/button.component";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
+import {AuthLayoutComponent} from "../../../shared/ui/templates/auth-layout/auth-layout.component";
 
-function extractErrorMessage(error: HttpErrorResponse): string {
+function extractErrorMessage(error: HttpErrorResponse, translateService: TranslateService): string {
     const payload = error.error as ApiErrorResponse | null;
 
-    return payload?.message ?? 'Nao foi possivel concluir o cadastro.';
+    return payload?.message ?? translateService.instant('auth.signUp.error');
 }
 
 @Component({
     selector: 'app-sign-up',
-    standalone: true,
-    imports: [ReactiveFormsModule, RouterLink],
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        AuthLayoutComponent,
+        FormFieldComponent,
+        TextInputComponent,
+        ButtonComponent,
+        AlertComponent
+    ],
     templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent {
 
-    readonly isSubmitting = signal(false);
-    readonly errorMessage = signal('');
-    readonly form = this.formBuilder.nonNullable.group(
+    private readonly notificationService = inject(NotificationService);
+    private readonly translateService = inject(TranslateService);
+    private readonly authService = inject(AuthService);
+    private readonly formBuilder = inject(NonNullableFormBuilder);
+    private readonly router = inject(Router);
+
+    protected readonly isSubmitting = signal(false);
+    protected readonly errorMessage = signal('');
+    protected readonly form = this.formBuilder.group(
         {
             name: ['', [Validators.required, Validators.maxLength(255)]],
             email: ['', [Validators.required, Validators.email]],
@@ -36,15 +54,7 @@ export class SignUpComponent {
         {validators: passwordMatchValidator}
     );
 
-    public constructor(
-        private notificationService: NotificationService,
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
-        private router: Router,
-    ) {
-    }
-
-    submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
@@ -60,13 +70,15 @@ export class SignUpComponent {
             .pipe(finalize(() => this.isSubmitting.set(false)))
             .subscribe({
                 next: () => {
-                    this.notificationService.success('Conta criada', 'Agora voce pode entrar e comecar a catalogar receitas.');
+                    this.notificationService.success(
+                        this.translateService.instant('auth.signUp.successTitle'),
+                        this.translateService.instant('auth.signUp.successMessage')
+                    );
                     void this.router.navigateByUrl('/auth/login');
                 },
                 error: (error: HttpErrorResponse) => {
-                    this.errorMessage.set(extractErrorMessage(error));
+                    this.errorMessage.set(extractErrorMessage(error, this.translateService));
                 }
             });
     }
 }
-

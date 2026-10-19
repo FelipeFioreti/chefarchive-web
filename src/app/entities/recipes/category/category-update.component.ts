@@ -14,6 +14,7 @@ import {
     EntityAuditAccordionComponent
 } from "../../../shared/components/entity-audit-accordion/entity-audit-accordion.component";
 import {AuthService} from "../../../core/services/auth.service";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
 
 @Component({
     selector: 'app-rec-category-update',
@@ -25,7 +26,8 @@ import {AuthService} from "../../../core/services/auth.service";
         FontAwesomeModule,
         TranslateModule,
         PageHeaderComponent,
-        EntityAuditAccordionComponent
+        EntityAuditAccordionComponent,
+        TextInputComponent
     ]
 })
 export class CategoryUpdateComponent implements OnInit {

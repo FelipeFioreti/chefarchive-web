@@ -12,6 +12,7 @@ import {PageHeaderComponent} from '../../../shared/components/page-header/page-h
 import {
     EntityAuditAccordionComponent
 } from '../../../shared/components/entity-audit-accordion/entity-audit-accordion.component';
+import {TextInputComponent} from '../../../shared/ui/atoms/text-input/text-input.component';
 import {UnitActionsService} from './unit-actions.service';
 
 @Component({
@@ -24,7 +25,8 @@ import {UnitActionsService} from './unit-actions.service';
         FontAwesomeModule,
         TranslateModule,
         PageHeaderComponent,
-        EntityAuditAccordionComponent
+        EntityAuditAccordionComponent,
+        TextInputComponent
     ]
 })
 export class UnitUpdateComponent implements OnInit {

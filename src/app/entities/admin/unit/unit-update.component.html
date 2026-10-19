@@ -1,7 +1,7 @@
 @if (unit(); as currentUnit) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.units' | translate"
+                [headerText]="'global.menu.units' | translate"
                 [title]="(currentUnit.id ? 'unit.home.editLabel' : 'unit.home.createLabel') | translate">
             <button
                     type="button"
@@ -35,10 +35,12 @@
 
                 <div class="row g-4">
                     <div class="col-lg-8">
-                        <label class="form-label required">{{ 'global.field.name' | translate }}</label>
-                        <input type="text" class="form-control" name="name" maxlength="50" required
-                               formControlName="name"
-                               [ngClass]="{'is-invalid': isInvalidAndTouched('name')}">
+                        <label class="form-label required" for="name">{{ 'global.field.name' | translate }}</label>
+                        <app-text-input
+                                inputId="name"
+                                formControlName="name"
+                                [maxlength]="50"
+                                [invalid]="isInvalidAndTouched('name')"/>
 
                         @if (isInvalidAndTouched('name')) {
                             <div class="invalid-feedback d-block">
@@ -56,10 +58,12 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <label class="form-label">{{ 'global.field.abbreviation' | translate }}</label>
-                        <input type="text" class="form-control" name="abbreviation" maxlength="10"
-                               formControlName="abbreviation"
-                               [ngClass]="{'is-invalid': isInvalidAndTouched('abbreviation')}">
+                        <label class="form-label" for="abbreviation">{{ 'global.field.abbreviation' | translate }}</label>
+                        <app-text-input
+                                inputId="abbreviation"
+                                formControlName="abbreviation"
+                                [maxlength]="10"
+                                [invalid]="isInvalidAndTouched('abbreviation')"/>
 
                         @if (isInvalidAndTouched('abbreviation')) {
                             <div class="invalid-feedback d-block">

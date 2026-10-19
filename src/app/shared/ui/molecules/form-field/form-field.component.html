@@ -1,0 +1,14 @@
+@if (label()) {
+  <div class="form-field-label-row">
+    <label class="form-label" [attr.for]="for() || null">{{ label() }}</label>
+    <ng-content select="[fieldAction]" />
+  </div>
+}
+
+<ng-content />
+
+@if (showError()) {
+  <div class="invalid-feedback d-block">{{ error() }}</div>
+} @else if (hint()) {
+  <div class="form-text">{{ hint() }}</div>
+}
