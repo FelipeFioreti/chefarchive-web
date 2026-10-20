@@ -7,22 +7,20 @@
         footerLink="/auth/login">
     <form class="d-grid gap-3" [formGroup]="form" (ngSubmit)="submit()">
         <app-form-field
-                for="name"
+                [required]="false"
                 [label]="'auth.field.name' | translate"
                 [error]="'auth.validation.name' | translate">
             <app-text-input
-                    inputId="name"
                     autocomplete="name"
                     formControlName="name"
                     [placeholder]="'auth.placeholder.name' | translate"/>
         </app-form-field>
 
         <app-form-field
-                for="email"
+                [required]="false"
                 [label]="'auth.field.email' | translate"
                 [error]="'auth.validation.email' | translate">
             <app-text-input
-                    inputId="email"
                     type="email"
                     autocomplete="email"
                     formControlName="email"
@@ -31,12 +29,11 @@
 
         <div class="row g-3">
             <app-form-field
+                    [required]="false"
                     class="col-12 col-md-6"
-                    for="password"
                     [label]="'auth.field.password' | translate"
                     [error]="'auth.validation.passwordMinLength' | translate">
                 <app-text-input
-                        inputId="password"
                         type="password"
                         autocomplete="new-password"
                         formControlName="password"
@@ -44,12 +41,11 @@
             </app-form-field>
 
             <app-form-field
+                    [required]="false"
                     class="col-12 col-md-6"
-                    for="confirmPassword"
                     [label]="'auth.field.confirmPassword' | translate"
                     [error]="'auth.validation.confirmPassword' | translate">
                 <app-text-input
-                        inputId="confirmPassword"
                         type="password"
                         autocomplete="new-password"
                         formControlName="confirmPassword"

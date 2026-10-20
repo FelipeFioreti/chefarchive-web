@@ -34,28 +34,18 @@
                     [formGroup]="editForm">
 
                 <div class="row g-4">
-                    <div class="col-lg-12">
-                        <label class="form-label required" for="name">{{ 'global.field.name' | translate }}</label>
-                        <app-text-input
-                                inputId="name"
-                                formControlName="name"
-                                [maxlength]="255"
-                                [invalid]="isInvalidAndTouched('name')"/>
+                    <app-form-field class="col-lg-12" [label]="'global.field.name' | translate">
+                        <app-text-input formControlName="name" [maxlength]="255"/>
 
-                        @if (isInvalidAndTouched('name')) {
-                            <div class="invalid-feedback d-block">
-                                @if (editForm.get('name')?.errors?.['required']) {
-                                    <small>{{ 'entity.validation.required' | translate }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['minlength']) {
-                                    <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['maxlength']) {
-                                    <small>{{ 'entity.validation.maxlength' | translate: {max: 255} }}</small>
-                                }
-                            </div>
-                        }
-                    </div>
+                        <ng-container fieldErrors>
+                            @if (editForm.get('name')?.errors?.['minlength']) {
+                                <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
+                            }
+                            @if (editForm.get('name')?.errors?.['maxlength']) {
+                                <small>{{ 'entity.validation.maxlength' | translate: {max: 255} }}</small>
+                            }
+                        </ng-container>
+                    </app-form-field>
                 </div>
             </form>
         </section>

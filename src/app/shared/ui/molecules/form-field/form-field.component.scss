@@ -8,3 +8,8 @@
   align-items: baseline;
   gap: 0.5rem;
 }
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--bs-danger);
+}

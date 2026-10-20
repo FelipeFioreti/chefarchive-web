@@ -1,24 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
 import { BaseControl } from '../base-control/base-control.directive';
 
 export type CheckboxVariant = 'checkbox' | 'switch';
-
-let nextId = 0;
 
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: BaseControl, useExisting: forwardRef(() => CheckboxComponent) }],
   host: { class: 'd-block' }
 })
 export class CheckboxComponent extends BaseControl<boolean> {
   readonly variant = input<CheckboxVariant>('checkbox');
 
   protected readonly checked = signal(false);
-
-  // O label fica dentro do componente, então sempre precisa de um id.
-  private readonly generatedId = `app-checkbox-${nextId++}`;
-  protected readonly id = computed(() => this.inputId() || this.generatedId);
 
   writeValue(value: boolean | null): void {
     this.checked.set(!!value);

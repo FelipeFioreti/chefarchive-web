@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, input, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, forwardRef, input, viewChild } from '@angular/core';
 import { BaseControl } from '../base-control/base-control.directive';
 import { InputDirective } from '../input/input.directive';
 
@@ -8,6 +8,7 @@ import { InputDirective } from '../input/input.directive';
   imports: [InputDirective],
   templateUrl: './date-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: BaseControl, useExisting: forwardRef(() => DateInputComponent) }],
   host: { class: 'd-block' }
 })
 export class DateInputComponent extends BaseControl<string | null> implements AfterViewInit {

@@ -2,7 +2,6 @@ import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {CommonModule} from "@angular/common";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -15,18 +14,19 @@ import {
 } from "../../../shared/components/entity-audit-accordion/entity-audit-accordion.component";
 import {AuthService} from "../../../core/services/auth.service";
 import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
 
 @Component({
     selector: 'app-rec-category-update',
     templateUrl: './category-update.component.html',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         FontAwesomeModule,
         TranslateModule,
         PageHeaderComponent,
         EntityAuditAccordionComponent,
+        FormFieldComponent,
         TextInputComponent
     ]
 })
@@ -99,10 +99,5 @@ export class CategoryUpdateComponent implements OnInit {
 
     private onSaveError(): void {
         this.isSaving.set(false);
-    }
-
-    isInvalidAndTouched(field: string): boolean {
-        const control = this.editForm.get(field);
-        return !!control && control.invalid && (control.dirty || control.touched);
     }
 }

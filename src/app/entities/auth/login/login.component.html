@@ -6,11 +6,10 @@
         footerLink="/auth/sign-up">
     <form class="d-grid gap-3" [formGroup]="form" (ngSubmit)="submit()">
         <app-form-field
-                for="email"
+                [required]="false"
                 [label]="'auth.field.email' | translate"
                 [error]="'auth.validation.email' | translate">
             <app-text-input
-                    inputId="email"
                     type="email"
                     autocomplete="email"
                     formControlName="email"
@@ -18,12 +17,11 @@
         </app-form-field>
 
         <app-form-field
-                for="password"
+                [required]="false"
                 [label]="'auth.field.password' | translate"
                 [error]="'auth.validation.passwordMinLength' | translate">
             <a fieldAction routerLink="/auth/forgot-password" class="small">{{ 'auth.login.forgotPassword' | translate }}</a>
             <app-text-input
-                    inputId="password"
                     type="password"
                     autocomplete="current-password"
                     formControlName="password"

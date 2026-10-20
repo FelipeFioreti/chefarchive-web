@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {catchError} from "rxjs/operators";
 import {of} from "rxjs";
-import {CommonModule} from "@angular/common";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -27,6 +26,7 @@ import {NumberInputComponent} from "../../../shared/ui/atoms/number-input/number
 import {SelectComponent} from "../../../shared/ui/atoms/select/select.component";
 import {SelectOptionDirective} from "../../../shared/ui/atoms/select/select-option.directive";
 import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
 import {TextareaComponent} from "../../../shared/ui/atoms/textarea/textarea.component";
 
 @Component({
@@ -34,7 +34,6 @@ import {TextareaComponent} from "../../../shared/ui/atoms/textarea/textarea.comp
     templateUrl: './recipe-update.component.html',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         FontAwesomeModule,
         TranslateModule,
@@ -44,6 +43,7 @@ import {TextareaComponent} from "../../../shared/ui/atoms/textarea/textarea.comp
         NumberInputComponent,
         SelectComponent,
         SelectOptionDirective,
+        FormFieldComponent,
         TextInputComponent,
         TextareaComponent
     ]
@@ -258,10 +258,5 @@ export class RecipeUpdateComponent implements OnInit {
 
     private onSaveError(): void {
         this.isSaving.set(false);
-    }
-
-    isInvalidAndTouched(field: string): boolean {
-        const control = this.editForm.get(field);
-        return !!control && control.invalid && (control.dirty || control.touched);
     }
 }

@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, forwardRef, input, signal } from '@angular/core';
 import { BaseControl } from '../base-control/base-control.directive';
 import { InputDirective } from '../input/input.directive';
 
@@ -7,6 +7,7 @@ import { InputDirective } from '../input/input.directive';
   imports: [InputDirective],
   templateUrl: './textarea.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: BaseControl, useExisting: forwardRef(() => TextareaComponent) }],
   host: { class: 'd-block' }
 })
 export class TextareaComponent extends BaseControl<string> {

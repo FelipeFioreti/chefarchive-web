@@ -1,6 +1,7 @@
 import { AfterContentInit, booleanAttribute, computed, DestroyRef, Directive, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { v4 as uuidv4 } from 'uuid';
 
 @Directive()
 export abstract class BaseControl<T> implements ControlValueAccessor, AfterContentInit {
@@ -8,6 +9,9 @@ export abstract class BaseControl<T> implements ControlValueAccessor, AfterConte
   readonly placeholder = input('');
   readonly readonly = input(false, { transform: booleanAttribute });
   readonly invalid = input<boolean | undefined>(undefined);
+
+  private readonly generatedId = `app-control-${uuidv4()}`;
+  readonly id = computed(() => this.inputId() || this.generatedId);
 
   protected readonly disabled = signal(false);
   private readonly controlInvalid = signal(false);

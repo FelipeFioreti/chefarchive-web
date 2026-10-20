@@ -1,15 +1,17 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, input, signal, TemplateRef } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, contentChild, forwardRef, input, signal, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { TranslateModule } from '@ngx-translate/core';
 import { BaseControl } from '../base-control/base-control.directive';
 import { SelectOptionDirective } from './select-option.directive';
 
 @Component({
   selector: 'app-select',
-  imports: [FormsModule, NgSelectModule, NgTemplateOutlet],
+  imports: [FormsModule, NgSelectModule, NgTemplateOutlet, TranslateModule],
   templateUrl: './select.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: BaseControl, useExisting: forwardRef(() => SelectComponent) }],
   host: { class: 'd-block' }
 })
 export class SelectComponent<T = unknown> extends BaseControl<unknown> {

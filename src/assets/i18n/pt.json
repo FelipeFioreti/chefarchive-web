@@ -46,6 +46,14 @@
         "email": "Informe um e-mail valido.",
         "invalid": "Valor invalido."
       }
+    },
+    "select": {
+      "notFound": "Nenhum item encontrado",
+      "typeToSearch": "Digite para pesquisar",
+      "addTag": "Adicionar item",
+      "loading": "Carregando...",
+      "clearAll": "Limpar tudo",
+      "dropdownLabel": "Lista de opcoes"
     }
   },
   "entity": {

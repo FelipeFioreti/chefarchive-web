@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, input, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, input, viewChild } from '@angular/core';
 import { BaseControl } from '../base-control/base-control.directive';
 import { InputDirective } from '../input/input.directive';
 
@@ -7,6 +7,7 @@ import { InputDirective } from '../input/input.directive';
   imports: [InputDirective],
   templateUrl: './number-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: BaseControl, useExisting: forwardRef(() => NumberInputComponent) }],
   host: { class: 'd-block' }
 })
 export class NumberInputComponent extends BaseControl<number | null> implements AfterViewInit {
