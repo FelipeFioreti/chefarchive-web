@@ -33,8 +33,7 @@
                     class="col-12 col-md-6"
                     [label]="'auth.field.password' | translate"
                     [error]="'auth.validation.passwordMinLength' | translate">
-                <app-text-input
-                        type="password"
+                <app-password-input
                         autocomplete="new-password"
                         formControlName="password"
                         [placeholder]="'auth.placeholder.passwordMinLength' | translate"/>
@@ -45,8 +44,7 @@
                     class="col-12 col-md-6"
                     [label]="'auth.field.confirmPassword' | translate"
                     [error]="'auth.validation.confirmPassword' | translate">
-                <app-text-input
-                        type="password"
+                <app-password-input
                         autocomplete="new-password"
                         formControlName="confirmPassword"
                         [placeholder]="'auth.placeholder.confirmPassword' | translate"/>

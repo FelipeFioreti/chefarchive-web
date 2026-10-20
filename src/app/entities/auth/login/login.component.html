@@ -21,8 +21,7 @@
                 [label]="'auth.field.password' | translate"
                 [error]="'auth.validation.passwordMinLength' | translate">
             <a fieldAction routerLink="/auth/forgot-password" class="small">{{ 'auth.login.forgotPassword' | translate }}</a>
-            <app-text-input
-                    type="password"
+            <app-password-input
                     autocomplete="current-password"
                     formControlName="password"
                     [placeholder]="'auth.placeholder.password' | translate"/>

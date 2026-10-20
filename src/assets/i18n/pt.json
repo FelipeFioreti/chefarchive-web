@@ -33,7 +33,9 @@
       "view": "Visualizar",
       "back": "Voltar",
       "add": "Adicionar",
-      "create": "Criar"
+      "create": "Criar",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha"
     },
     "messages": {
       "info": {

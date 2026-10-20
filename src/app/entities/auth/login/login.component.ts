@@ -9,6 +9,7 @@ import {ApiErrorResponse} from "../../../core/models/api-error.model";
 import {AlertComponent} from "../../../shared/ui/atoms/alert/alert.component";
 import {ButtonComponent} from "../../../shared/ui/atoms/button/button.component";
 import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {PasswordInputComponent} from "../../../shared/ui/molecules/password-input/password-input.component";
 import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
 import {AuthLayoutComponent} from "../../../shared/ui/templates/auth-layout/auth-layout.component";
 
@@ -27,6 +28,7 @@ function extractErrorMessage(error: HttpErrorResponse, translateService: Transla
         AuthLayoutComponent,
         FormFieldComponent,
         TextInputComponent,
+        PasswordInputComponent,
         ButtonComponent,
         AlertComponent
     ],
