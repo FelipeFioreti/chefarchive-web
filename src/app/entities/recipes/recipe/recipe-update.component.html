@@ -1,7 +1,7 @@
 @if (recipe(); as currentRecipe) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.recipes' | translate"
+                [headerText]="'global.menu.recipes' | translate"
                 [title]="(currentRecipe.id ? 'recipe.home.editLabel' : 'recipe.home.createLabel') | translate">
             <button type="button" ngProjectAs="[page-actions]"
                     class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-3"
@@ -27,49 +27,36 @@
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-lg-7">
-                        <label class="form-label required">{{ 'global.field.name' | translate }}</label>
-                        <input type="text" class="form-control" name="name" maxlength="255" required
-                               formControlName="name" [ngClass]="{'is-invalid': isInvalidAndTouched('name')}">
-                        @if (isInvalidAndTouched('name')) {
-                            <div class="invalid-feedback d-block">
-                                @if (editForm.get('name')?.errors?.['required']) {
-                                    <small>{{ 'entity.validation.required' | translate }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['minlength']) {
-                                    <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['maxlength']) {
-                                    <small>{{ 'entity.validation.maxlength' | translate: {max: 255} }}</small>
-                                }
-                            </div>
-                        }
-                    </div>
+                    <app-form-field class="col-lg-7" [label]="'global.field.name' | translate">
+                        <app-text-input formControlName="name" [maxlength]="255"/>
 
-                    <div class="col-lg-5">
-                        <label class="form-label required">{{ 'recipe.category' | translate }}</label>
-                        <ng-select [items]="categories()" formControlName="category" bindLabel="name"
-                                   [searchable]="false"
-                                   [placeholder]="'recipe.categoryPlaceholder' | translate"
-                                   [class.is-invalid]="isInvalidAndTouched('category')">
-                        </ng-select>
-                        @if (isInvalidAndTouched('category')) {
-                            <div class="invalid-feedback d-block">
-                                <small>{{ 'entity.validation.required' | translate }}</small>
-                            </div>
-                        }
-                    </div>
+                        <ng-container fieldErrors>
+                            @if (editForm.get('name')?.errors?.['minlength']) {
+                                <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
+                            }
+                            @if (editForm.get('name')?.errors?.['maxlength']) {
+                                <small>{{ 'entity.validation.maxlength' | translate: {max: 255} }}</small>
+                            }
+                        </ng-container>
+                    </app-form-field>
 
-                    <div class="col-12">
-                        <label class="form-label">{{ 'recipe.description' | translate }}</label>
-                        <textarea class="form-control" name="description" formControlName="description"
-                                  [ngClass]="{'is-invalid': isInvalidAndTouched('description')}"></textarea>
-                        @if (isInvalidAndTouched('description')) {
-                            <div class="invalid-feedback d-block">
+                    <app-form-field class="col-lg-5" [label]="'recipe.category' | translate">
+                        <app-select
+                                formControlName="category"
+                                bindLabel="name"
+                                [items]="categories()"
+                                [placeholder]="'recipe.categoryPlaceholder' | translate"/>
+                    </app-form-field>
+
+                    <app-form-field class="col-12" [label]="'recipe.description' | translate">
+                        <app-textarea formControlName="description"/>
+
+                        <ng-container fieldErrors>
+                            @if (editForm.get('description')?.errors?.['maxlength']) {
                                 <small>{{ 'entity.validation.maxlength' | translate: {max: 2000} }}</small>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </ng-container>
+                    </app-form-field>
                 </div>
             </section>
 
@@ -103,27 +90,27 @@
                                 @for (ingredient of ingredients.controls; track ingredient; let i = $index) {
                                     <tr [formGroupName]="i">
                                         <td [attr.data-label]="'recipe.ingredientName' | translate">
-                                            <input class="form-control" formControlName="name"
-                                                   [placeholder]="'recipe.ingredientNamePlaceholder' | translate">
+                                            <app-text-input
+                                                    formControlName="name"
+                                                    [placeholder]="'recipe.ingredientNamePlaceholder' | translate"/>
                                         </td>
                                         <td [attr.data-label]="'recipe.quantity' | translate">
-                                            <input class="form-control" type="number" min="1" step="1"
-                                                   formControlName="quantity"
-                                                   [placeholder]="'recipe.quantityPlaceholder' | translate">
+                                            <app-number-input
+                                                    formControlName="quantity"
+                                                    [min]="1"
+                                                    [step]="1"
+                                                    [placeholder]="'recipe.quantityPlaceholder' | translate"/>
                                         </td>
                                         <td [attr.data-label]="'recipe.unit' | translate">
-                                            <ng-select [items]="units()" formControlName="unit" bindLabel="name"
-                                                       appendTo="body"
-                                                       [searchable]="false"
-                                                       [clearable]="false"
-                                                       [placeholder]="'recipe.unitPlaceholder' | translate">
-                                                <ng-template ng-label-tmp let-item="item">{{ item.name }}
-                                                    ({{ item.abbreviation }})
-                                                </ng-template>
-                                                <ng-template ng-option-tmp let-item="item">{{ item.name }}
-                                                    ({{ item.abbreviation }})
-                                                </ng-template>
-                                            </ng-select>
+                                            <app-select
+                                                    formControlName="unit"
+                                                    bindLabel="name"
+                                                    appendTo="body"
+                                                    [items]="units()"
+                                                    [clearable]="false"
+                                                    [placeholder]="'recipe.unitPlaceholder' | translate">
+                                                <ng-template appSelectOption let-item>{{ item.name }} ({{ item.abbreviation }})</ng-template>
+                                            </app-select>
                                         </td>
                                         <td class="text-end entity-list-table-actions-cell"
                                             [attr.data-label]="'recipe.actions' | translate">
@@ -169,7 +156,8 @@
                                 <fa-icon icon="grip-vertical"></fa-icon>
                             </button>
                             <span class="input-group-text">{{ i + 1 }}</span>
-                            <textarea class="form-control" formControlName="description"
+                            <!-- Fica nativo: o input-group do Bootstrap só estiliza filhos diretos. -->
+                            <textarea appInput formControlName="description"
                                       [placeholder]="'recipe.stepPlaceholder' | translate"></textarea>
                             <button type="button" class="btn btn-outline-danger" (click)="removeStep(i)"
                                     [attr.aria-label]="'recipe.removeStep' | translate">

@@ -1,0 +1,16 @@
+<textarea
+    appInput
+    [id]="id()"
+    [rows]="rows()"
+    [value]="value()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.maxlength]="maxlength()"
+    [readOnly]="readonly()"
+    [disabled]="disabled()"
+    [invalid]="isInvalid()"
+    (input)="handleInput($event)"
+    (blur)="onTouched()"></textarea>
+
+@if (showCount() && maxlength()) {
+    <div class="form-text text-end">{{ value().length }}/{{ maxlength() }}</div>
+}

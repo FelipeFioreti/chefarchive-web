@@ -1,0 +1,12 @@
+@if (loading()) {
+  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+  <span class="visually-hidden">{{ 'global.loading' | translate }}</span>
+}
+
+@if (showLoadingText()) {
+  <span>{{ loadingText() }}</span>
+}
+
+<span class="app-button-content" [class.d-none]="showLoadingText()">
+  <ng-content />
+</span>

@@ -1,7 +1,7 @@
 @if (unit(); as currentUnit) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.units' | translate"
+                [headerText]="'global.menu.units' | translate"
                 [title]="(currentUnit.id ? 'unit.home.editLabel' : 'unit.home.createLabel') | translate">
             <button
                     type="button"
@@ -34,41 +34,28 @@
                     [formGroup]="editForm">
 
                 <div class="row g-4">
-                    <div class="col-lg-8">
-                        <label class="form-label required">{{ 'global.field.name' | translate }}</label>
-                        <input type="text" class="form-control" name="name" maxlength="50" required
-                               formControlName="name"
-                               [ngClass]="{'is-invalid': isInvalidAndTouched('name')}">
+                    <app-form-field class="col-lg-8" [label]="'global.field.name' | translate">
+                        <app-text-input formControlName="name" [maxlength]="50"/>
 
-                        @if (isInvalidAndTouched('name')) {
-                            <div class="invalid-feedback d-block">
-                                @if (editForm.get('name')?.errors?.['required']) {
-                                    <small>{{ 'entity.validation.required' | translate }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['minlength']) {
-                                    <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
-                                }
-                                @if (editForm.get('name')?.errors?.['maxlength']) {
-                                    <small>{{ 'entity.validation.maxlength' | translate: {max: 50} }}</small>
-                                }
-                            </div>
-                        }
-                    </div>
+                        <ng-container fieldErrors>
+                            @if (editForm.get('name')?.errors?.['minlength']) {
+                                <small>{{ 'entity.validation.minlength' | translate: {min: 1} }}</small>
+                            }
+                            @if (editForm.get('name')?.errors?.['maxlength']) {
+                                <small>{{ 'entity.validation.maxlength' | translate: {max: 50} }}</small>
+                            }
+                        </ng-container>
+                    </app-form-field>
 
-                    <div class="col-lg-4">
-                        <label class="form-label">{{ 'global.field.abbreviation' | translate }}</label>
-                        <input type="text" class="form-control" name="abbreviation" maxlength="10"
-                               formControlName="abbreviation"
-                               [ngClass]="{'is-invalid': isInvalidAndTouched('abbreviation')}">
+                    <app-form-field class="col-lg-4" [label]="'global.field.abbreviation' | translate">
+                        <app-text-input formControlName="abbreviation" [maxlength]="10"/>
 
-                        @if (isInvalidAndTouched('abbreviation')) {
-                            <div class="invalid-feedback d-block">
-                                @if (editForm.get('abbreviation')?.errors?.['maxlength']) {
-                                    <small>{{ 'entity.validation.maxlength' | translate: {max: 10} }}</small>
-                                }
-                            </div>
-                        }
-                    </div>
+                        <ng-container fieldErrors>
+                            @if (editForm.get('abbreviation')?.errors?.['maxlength']) {
+                                <small>{{ 'entity.validation.maxlength' | translate: {max: 10} }}</small>
+                            }
+                        </ng-container>
+                    </app-form-field>
                 </div>
             </form>
         </section>

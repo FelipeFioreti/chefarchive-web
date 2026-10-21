@@ -10,6 +10,10 @@
   max-width: 31rem;
 }
 
+.auth-card-wide {
+  max-width: 33rem;
+}
+
 @media (max-width: 575px) {
   :host {
     align-items: start;

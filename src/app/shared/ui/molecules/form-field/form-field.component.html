@@ -1,0 +1,23 @@
+@if (label()) {
+  <div class="form-field-label-row">
+    <label class="form-label" [class.required]="isRequired()" [attr.for]="labelFor()">{{ label() }}</label>
+    <ng-content select="[fieldAction]" />
+  </div>
+}
+
+<ng-content />
+
+@if (showError()) {
+  <div class="invalid-feedback d-block">
+    @if (error()) {
+      {{ error() }}
+    } @else {
+      @if (hasRequiredError()) {
+        <small>{{ 'entity.validation.required' | translate }}</small>
+      }
+      <ng-content select="[fieldErrors]" />
+    }
+  </div>
+} @else if (hint()) {
+  <div class="form-text">{{ hint() }}</div>
+}

@@ -1,6 +1,7 @@
 {
   "global": {
     "title": "Recipes",
+    "loading": "Carregando...",
     "menu": {
       "home": "Inicio",
       "entities": "Entidades",
@@ -32,7 +33,9 @@
       "view": "Visualizar",
       "back": "Voltar",
       "add": "Adicionar",
-      "create": "Criar"
+      "create": "Criar",
+      "showPassword": "Mostrar senha",
+      "hidePassword": "Ocultar senha"
     },
     "messages": {
       "info": {
@@ -45,6 +48,14 @@
         "email": "Informe um e-mail valido.",
         "invalid": "Valor invalido."
       }
+    },
+    "select": {
+      "notFound": "Nenhum item encontrado",
+      "typeToSearch": "Digite para pesquisar",
+      "addTag": "Adicionar item",
+      "loading": "Carregando...",
+      "clearAll": "Limpar tudo",
+      "dropdownLabel": "Lista de opcoes"
     }
   },
   "entity": {
@@ -129,12 +140,79 @@
     },
     "notFound": "Nenhuma unidade encontrada"
   },
-  "login": {
-    "title": "Entre na cozinha digital",
-    "subtitle": "Consulte o acervo, acompanhe o ritmo da operacao e edite receitas sem sair do fluxo.",
-    "button": "Entrar",
-    "logging-in": "Entrando...",
-    "new-user": "Novo por aqui?",
-    "create-account": "Crie sua conta"
+  "auth": {
+    "field": {
+      "name": "Nome",
+      "email": "Email",
+      "password": "Senha",
+      "newPassword": "Nova senha",
+      "confirmPassword": "Confirmacao"
+    },
+    "placeholder": {
+      "name": "Seu nome",
+      "email": "email@gmail.com",
+      "password": "Sua senha segura",
+      "passwordMinLength": "Ao menos 6 caracteres",
+      "confirmPassword": "Repita a senha",
+      "confirmNewPassword": "Repita a nova senha"
+    },
+    "validation": {
+      "name": "Informe seu nome.",
+      "email": "Informe um email valido.",
+      "passwordMinLength": "A senha precisa ter ao menos 6 caracteres.",
+      "confirmPassword": "Confirme sua senha.",
+      "confirmNewPassword": "Confirme sua nova senha.",
+      "passwordMismatch": "As senhas precisam ser iguais."
+    },
+    "errors": {
+      "tooManyRequests": "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente."
+    },
+    "login": {
+      "headerText": "Acesso",
+      "title": "Entre em Chef Archive",
+      "forgotPassword": "Esqueceu a senha?",
+      "submit": "Entrar",
+      "submitting": "Entrando...",
+      "footerText": "Novo por aqui?",
+      "footerLink": "Crie sua conta",
+      "error": "Nao foi possivel autenticar com as credenciais informadas."
+    },
+    "signUp": {
+      "headerText": "Cadastro",
+      "title": "Crie sua conta",
+      "submit": "Criar conta",
+      "submitting": "Criando conta...",
+      "footerText": "Ja tem acesso?",
+      "footerLink": "Entrar",
+      "error": "Nao foi possivel concluir o cadastro.",
+      "successTitle": "Conta criada",
+      "successMessage": "Agora voce pode entrar e comecar a catalogar receitas."
+    },
+    "forgotPassword": {
+      "headerText": "Recuperacao",
+      "title": "Esqueceu a senha?",
+      "description": "Informe o email da sua conta e enviaremos um link para voce escolher uma nova senha.",
+      "sentPrefix": "Se existir uma conta com",
+      "sentSuffix": ", enviamos um link para redefinir a senha. O link vale por 30 minutos. Confira tambem a caixa de spam.",
+      "submit": "Enviar link",
+      "submitting": "Enviando...",
+      "footerText": "Lembrou a senha?",
+      "footerLink": "Entrar",
+      "error": "Nao foi possivel enviar o link de redefinicao."
+    },
+    "resetPassword": {
+      "headerText": "Recuperacao",
+      "title": "Escolha uma nova senha",
+      "invalidLink": "Link de redefinicao invalido. Use o link recebido por email ou solicite um novo.",
+      "requestNewLink": "Solicitar novo link",
+      "submit": "Redefinir senha",
+      "submitting": "Salvando...",
+      "footerText": "Lembrou a senha?",
+      "footerLink": "Entrar",
+      "expiredLink": "Este link e invalido, ja foi usado ou expirou. Solicite um novo link.",
+      "error": "Nao foi possivel redefinir a senha.",
+      "successTitle": "Senha redefinida",
+      "successMessage": "Entre com a sua nova senha."
+    }
   }
 }

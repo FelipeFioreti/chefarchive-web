@@ -1,44 +1,54 @@
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {RouterLink} from '@angular/router';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {finalize} from 'rxjs';
 import {AuthService} from "../../../core/services/auth.service";
 import {ApiErrorResponse} from "../../../core/models/api-error.model";
+import {AlertComponent} from "../../../shared/ui/atoms/alert/alert.component";
+import {ButtonComponent} from "../../../shared/ui/atoms/button/button.component";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
+import {AuthLayoutComponent} from "../../../shared/ui/templates/auth-layout/auth-layout.component";
 
-function extractErrorMessage(error: HttpErrorResponse): string {
+function extractErrorMessage(error: HttpErrorResponse, translateService: TranslateService): string {
     if (error.status === HttpStatusCode.TooManyRequests) {
-        return 'Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.';
+        return translateService.instant('auth.errors.tooManyRequests');
     }
 
     const payload = error.error as ApiErrorResponse | null;
 
-    return payload?.message ?? 'Nao foi possivel enviar o link de redefinicao.';
+    return payload?.message ?? translateService.instant('auth.forgotPassword.error');
 }
 
 @Component({
     selector: 'app-forgot-password',
-    standalone: true,
-    imports: [ReactiveFormsModule, RouterLink],
+    imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        AuthLayoutComponent,
+        FormFieldComponent,
+        TextInputComponent,
+        ButtonComponent,
+        AlertComponent
+    ],
     templateUrl: './forgot-password.component.html',
-    styleUrls: ['./forgot-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForgotPasswordComponent {
 
-    readonly isSubmitting = signal(false);
-    readonly errorMessage = signal('');
-    readonly sentTo = signal('');
-    readonly form = this.formBuilder.nonNullable.group({
+    private readonly authService = inject(AuthService);
+    private readonly translateService = inject(TranslateService);
+    private readonly formBuilder = inject(NonNullableFormBuilder);
+
+    protected readonly isSubmitting = signal(false);
+    protected readonly errorMessage = signal('');
+    protected readonly sentTo = signal('');
+    protected readonly form = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]]
     });
 
-    public constructor(
-        private authService: AuthService,
-        private formBuilder: FormBuilder) {
-    }
-
-    submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
@@ -57,7 +67,7 @@ export class ForgotPasswordComponent {
                     this.sentTo.set(payload.email);
                 },
                 error: (error: HttpErrorResponse) => {
-                    this.errorMessage.set(extractErrorMessage(error));
+                    this.errorMessage.set(extractErrorMessage(error, this.translateService));
                 }
             });
     }

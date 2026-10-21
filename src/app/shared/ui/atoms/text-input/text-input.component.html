@@ -1,0 +1,13 @@
+<input
+    appInput
+    [id]="id()"
+    [type]="type()"
+    [value]="value()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.autocomplete]="autocomplete() || null"
+    [attr.maxlength]="maxlength()"
+    [readOnly]="readonly()"
+    [disabled]="disabled()"
+    [invalid]="isInvalid()"
+    (input)="handleInput($event)"
+    (blur)="onTouched()"/>
