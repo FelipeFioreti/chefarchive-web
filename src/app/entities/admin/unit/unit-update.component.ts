@@ -11,6 +11,7 @@ import {PageHeaderComponent} from '../../../shared/components/page-header/page-h
 import {
     EntityAuditAccordionComponent
 } from '../../../shared/components/entity-audit-accordion/entity-audit-accordion.component';
+import {CheckboxComponent} from '../../../shared/ui/atoms/checkbox/checkbox.component';
 import {TextInputComponent} from '../../../shared/ui/atoms/text-input/text-input.component';
 import {FormFieldComponent} from '../../../shared/ui/molecules/form-field/form-field.component';
 import {UnitActionsService} from './unit-actions.service';
@@ -26,7 +27,8 @@ import {UnitActionsService} from './unit-actions.service';
         PageHeaderComponent,
         EntityAuditAccordionComponent,
         FormFieldComponent,
-        TextInputComponent
+        TextInputComponent,
+        CheckboxComponent
     ]
 })
 export class UnitUpdateComponent implements OnInit {
@@ -92,6 +94,7 @@ export class UnitUpdateComponent implements OnInit {
 
     private updateUnit(unit: IUnit): void {
         unit.name = this.editForm.get(['name'])!.value ?? '';
+        unit.showAbbreviation = this.editForm.get(['showAbbreviation'])!.value ?? false;
         unit.abbreviation = this.editForm.get(['abbreviation'])!.value ?? '';
     }
 
