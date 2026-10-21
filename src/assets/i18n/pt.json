@@ -23,7 +23,8 @@
       "password": "Senha",
       "description": "Descricao",
       "createdDate": "Criado em",
-      "lastModifiedDate": "Alterado em"
+      "lastModifiedDate": "Alterado em",
+      "showAbbreviation": "Exibir abreviacao"
     },
     "action": {
       "save": "Salvar",

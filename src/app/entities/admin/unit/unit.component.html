@@ -25,6 +25,9 @@
                             <th scope="col">
                                 <span translate="global.field.abbreviation"></span>
                             </th>
+                            <th scope="col">
+                                <span translate="global.field.showAbbreviation"></span>
+                            </th>
                             <th scope="col" class="text-center">
                                 @if (!isMobile()) {
                                     <span>Acoes</span>
@@ -44,6 +47,10 @@
 
                                     <td [attr.data-label]="'global.field.abbreviation' | translate">
                                         <span>{{ unit.abbreviation || '-' }}</span>
+                                    </td>
+
+                                    <td [attr.data-label]="'global.field.showAbbreviation' | translate">
+                                        <app-bool-icon [value]="unit.showAbbreviation"/>
                                     </td>
 
                                     <td class="text-center entity-list-table-actions-cell" [attr.data-label]="isMobile() ? null : 'Acoes'">

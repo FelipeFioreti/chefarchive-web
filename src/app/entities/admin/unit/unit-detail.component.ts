@@ -8,6 +8,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {IUnit} from '../../../core/models/unit.model';
 import {PageHeaderComponent} from '../../../shared/components/page-header/page-header.component';
 import {EntityAuditAccordionComponent} from '../../../shared/components/entity-audit-accordion/entity-audit-accordion.component';
+import {BoolIconComponent} from '../../../shared/ui/atoms/boolean-icon/bool-icon.component';
 
 @Component({
     selector: 'app-unit-detail',
@@ -19,7 +20,8 @@ import {EntityAuditAccordionComponent} from '../../../shared/components/entity-a
         FontAwesomeModule,
         TranslateModule,
         PageHeaderComponent,
-        EntityAuditAccordionComponent
+        EntityAuditAccordionComponent,
+        BoolIconComponent
     ]
 })
 export class UnitDetailComponent implements OnInit {

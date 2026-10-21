@@ -109,7 +109,7 @@
                                                     [items]="units()"
                                                     [clearable]="false"
                                                     [placeholder]="'recipe.unitPlaceholder' | translate">
-                                                <ng-template appSelectOption let-item>{{ item.name }} ({{ item.abbreviation }})</ng-template>
+                                                <ng-template appSelectOption let-item>{{ item.name }} {{ item.abbreviation ? `(${item.abbreviation})` : '' }}</ng-template>
                                             </app-select>
                                         </td>
                                         <td class="text-end entity-list-table-actions-cell"

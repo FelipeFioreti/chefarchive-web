@@ -11,6 +11,7 @@ import {ITEMS_PER_PAGE} from '../../../core/constants/pagination.constants';
 import {IUnit} from '../../../core/models/unit.model';
 import {UnitsService} from '../../../core/services/units.service';
 import {PageHeaderComponent} from '../../../shared/components/page-header/page-header.component';
+import {BoolIconComponent} from '../../../shared/ui/atoms/boolean-icon/bool-icon.component';
 import {UnitActionsService} from './unit-actions.service';
 
 @Component({
@@ -24,6 +25,7 @@ import {UnitActionsService} from './unit-actions.service';
         TranslateModule,
         NgbPaginationModule,
         PageHeaderComponent,
+        BoolIconComponent,
     ],
 })
 export class UnitComponent implements OnInit {
