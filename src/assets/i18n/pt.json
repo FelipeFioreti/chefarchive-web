@@ -26,10 +26,6 @@
       "lastModifiedDate": "Alterado em",
       "showAbbreviation": "Exibir abreviacao"
     },
-    "boolean": {
-      "true": "Sim",
-      "false": "Nao"
-    },
     "action": {
       "save": "Salvar",
       "cancel": "Cancelar",

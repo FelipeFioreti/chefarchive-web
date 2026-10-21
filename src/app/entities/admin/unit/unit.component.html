@@ -50,7 +50,7 @@
                                     </td>
 
                                     <td [attr.data-label]="'global.field.showAbbreviation' | translate">
-                                        <span>{{ (unit.showAbbreviation ? 'global.boolean.true' : 'global.boolean.false') | translate }}</span>
+                                        <app-bool-icon [value]="unit.showAbbreviation"/>
                                     </td>
 
                                     <td class="text-center entity-list-table-actions-cell" [attr.data-label]="isMobile() ? null : 'Acoes'">

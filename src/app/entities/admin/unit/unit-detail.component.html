@@ -38,7 +38,7 @@
 
                     <article class="entity-detail-item">
                         <span class="entity-detail-item-label">{{ 'global.field.showAbbreviation' | translate }}</span>
-                        <strong class="entity-detail-item-value">{{ (unitRef.showAbbreviation ? 'global.boolean.true' : 'global.boolean.false') | translate }}</strong>
+                        <strong class="entity-detail-item-value"><app-bool-icon [value]="unitRef.showAbbreviation"/></strong>
                     </article>
                 </div>
             </div>
