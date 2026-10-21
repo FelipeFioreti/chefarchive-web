@@ -4,10 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {catchError} from "rxjs/operators";
 import {of} from "rxjs";
-import {CommonModule} from "@angular/common";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {TranslateModule} from "@ngx-translate/core";
-import {NgSelectModule} from "@ng-select/ng-select";
 
 import {RecipeActionsService} from "./recipe-actions.service";
 import {RecipeService} from "../../../core/services/recipe-service";
@@ -23,19 +21,31 @@ import {
     EntityAuditAccordionComponent
 } from "../../../shared/components/entity-audit-accordion/entity-audit-accordion.component";
 import {AuthService} from "../../../core/services/auth.service";
+import {InputDirective} from "../../../shared/ui/atoms/input/input.directive";
+import {NumberInputComponent} from "../../../shared/ui/atoms/number-input/number-input.component";
+import {SelectComponent} from "../../../shared/ui/atoms/select/select.component";
+import {SelectOptionDirective} from "../../../shared/ui/atoms/select/select-option.directive";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
+import {TextareaComponent} from "../../../shared/ui/atoms/textarea/textarea.component";
 
 @Component({
     selector: 'app-rec-recipe-update',
     templateUrl: './recipe-update.component.html',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         FontAwesomeModule,
         TranslateModule,
-        NgSelectModule,
         PageHeaderComponent,
-        EntityAuditAccordionComponent
+        EntityAuditAccordionComponent,
+        InputDirective,
+        NumberInputComponent,
+        SelectComponent,
+        SelectOptionDirective,
+        FormFieldComponent,
+        TextInputComponent,
+        TextareaComponent
     ]
 })
 export class RecipeUpdateComponent implements OnInit {
@@ -154,14 +164,14 @@ export class RecipeUpdateComponent implements OnInit {
         recipe.categoryId = recipe.category?.id;
         recipe.ingredients = this.ingredients.getRawValue().map((ingredient: any) => ({
             id: ingredient.id || undefined,
-            name: ingredient.Name?.trim(),
+            name: ingredient.name?.trim(),
             quantity: Number(ingredient.quantity),
             unitId: Number(ingredient.unit?.id)
         }));
         recipe.steps = this.steps.getRawValue().map((step: any, index: number) => ({
-            id: step.Id || undefined,
-            position: Number(step.Position || index + 1),
-            description: step.Description?.trim()
+            id: step.id || undefined,
+            position: Number(step.position || index + 1),
+            description: step.description?.trim()
         }));
     }
 
@@ -248,10 +258,5 @@ export class RecipeUpdateComponent implements OnInit {
 
     private onSaveError(): void {
         this.isSaving.set(false);
-    }
-
-    isInvalidAndTouched(field: string): boolean {
-        const control = this.editForm.get(field);
-        return !!control && control.invalid && (control.dirty || control.touched);
     }
 }

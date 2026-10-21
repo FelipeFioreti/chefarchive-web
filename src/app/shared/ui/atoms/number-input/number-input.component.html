@@ -1,0 +1,15 @@
+<input
+    #field
+    appInput
+    type="number"
+    [id]="id()"
+    [attr.placeholder]="placeholder() || null"
+    [attr.min]="min()"
+    [attr.max]="max()"
+    [attr.step]="step()"
+    [attr.inputmode]="inputMode()"
+    [readOnly]="readonly()"
+    [disabled]="disabled()"
+    [invalid]="isInvalid()"
+    (input)="handleInput($event)"
+    (blur)="onTouched()"/>

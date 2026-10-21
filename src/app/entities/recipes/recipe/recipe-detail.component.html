@@ -1,7 +1,7 @@
 @if (recipe(); as recipeRef) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.recipes' | translate"
+                [headerText]="'global.menu.recipes' | translate"
                 [title]="'recipe.detail.title' | translate">
             <button
                     type="button"
@@ -47,7 +47,7 @@
                         <span class="entity-detail-item-label">{{ 'recipe.ingredients' | translate }}</span>
                         <ul class="mb-0">
                             @for (ingredient of recipeRef.ingredients || []; track ingredient.id) {
-                                <li>{{ ingredient.quantity }} {{ ingredient.unit?.showAbbreviation ? ingredient.unit?.abbreviation : '' }} {{ ingredient.name }}</li>
+                                <li>{{ ingredient.quantity }}{{ ingredient.unit?.showAbbreviation ? ingredient.unit?.abbreviation : '' }} {{ ingredient.name }}</li>
                             } @empty {
                                 <li>{{ 'recipe.noIngredients' | translate }}</li>
                             }

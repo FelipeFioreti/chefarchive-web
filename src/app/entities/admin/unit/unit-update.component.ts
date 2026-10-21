@@ -2,7 +2,6 @@ import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {CommonModule} from '@angular/common';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TranslateModule} from '@ngx-translate/core';
 
@@ -12,6 +11,9 @@ import {PageHeaderComponent} from '../../../shared/components/page-header/page-h
 import {
     EntityAuditAccordionComponent
 } from '../../../shared/components/entity-audit-accordion/entity-audit-accordion.component';
+import {CheckboxComponent} from '../../../shared/ui/atoms/checkbox/checkbox.component';
+import {TextInputComponent} from '../../../shared/ui/atoms/text-input/text-input.component';
+import {FormFieldComponent} from '../../../shared/ui/molecules/form-field/form-field.component';
 import {UnitActionsService} from './unit-actions.service';
 
 @Component({
@@ -19,12 +21,14 @@ import {UnitActionsService} from './unit-actions.service';
     templateUrl: './unit-update.component.html',
     standalone: true,
     imports: [
-        CommonModule,
         ReactiveFormsModule,
         FontAwesomeModule,
         TranslateModule,
         PageHeaderComponent,
-        EntityAuditAccordionComponent
+        EntityAuditAccordionComponent,
+        FormFieldComponent,
+        TextInputComponent,
+        CheckboxComponent
     ]
 })
 export class UnitUpdateComponent implements OnInit {
@@ -90,6 +94,7 @@ export class UnitUpdateComponent implements OnInit {
 
     private updateUnit(unit: IUnit): void {
         unit.name = this.editForm.get(['name'])!.value ?? '';
+        unit.showAbbreviation = this.editForm.get(['showAbbreviation'])!.value ?? false;
         unit.abbreviation = this.editForm.get(['abbreviation'])!.value ?? '';
     }
 
@@ -100,10 +105,5 @@ export class UnitUpdateComponent implements OnInit {
 
     private onSaveError(): void {
         this.isSaving.set(false);
-    }
-
-    isInvalidAndTouched(field: string): boolean {
-        const control = this.editForm.get(field);
-        return !!control && control.invalid && (control.dirty || control.touched);
     }
 }

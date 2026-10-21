@@ -1,0 +1,12 @@
+<input
+    #field
+    appInput
+    type="date"
+    [id]="id()"
+    [attr.min]="min()"
+    [attr.max]="max()"
+    [readOnly]="readonly()"
+    [disabled]="disabled()"
+    [invalid]="isInvalid()"
+    (input)="handleInput($event)"
+    (blur)="onTouched()"/>

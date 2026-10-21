@@ -1,41 +1,55 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {finalize} from 'rxjs';
 import {AuthService} from "../../../core/services/auth.service";
 import {ApiErrorResponse} from "../../../core/models/api-error.model";
+import {AlertComponent} from "../../../shared/ui/atoms/alert/alert.component";
+import {ButtonComponent} from "../../../shared/ui/atoms/button/button.component";
+import {TextInputComponent} from "../../../shared/ui/atoms/text-input/text-input.component";
+import {PasswordInputComponent} from "../../../shared/ui/molecules/password-input/password-input.component";
+import {FormFieldComponent} from "../../../shared/ui/molecules/form-field/form-field.component";
+import {AuthLayoutComponent} from "../../../shared/ui/templates/auth-layout/auth-layout.component";
 
-function extractErrorMessage(error: HttpErrorResponse): string {
+function extractErrorMessage(error: HttpErrorResponse, translateService: TranslateService): string {
     const payload = error.error as ApiErrorResponse | null;
 
-    return payload?.message ?? 'Nao foi possivel autenticar com as credenciais informadas.';
+    return payload?.message ?? translateService.instant('auth.login.error');
 }
 
 @Component({
     selector: 'app-sign-in',
-    standalone: true,
-    imports: [ReactiveFormsModule, RouterLink],
+    imports: [
+        ReactiveFormsModule,
+        RouterLink,
+        TranslateModule,
+        AuthLayoutComponent,
+        FormFieldComponent,
+        TextInputComponent,
+        PasswordInputComponent,
+        ButtonComponent,
+        AlertComponent
+    ],
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
 
-    readonly isSubmitting = signal(false);
-    readonly errorMessage = signal('');
-    readonly form = this.formBuilder.nonNullable.group({
+    private readonly authService = inject(AuthService);
+    private readonly translateService = inject(TranslateService);
+    private readonly formBuilder = inject(NonNullableFormBuilder);
+    private readonly router = inject(Router);
+
+    protected readonly isSubmitting = signal(false);
+    protected readonly errorMessage = signal('');
+    protected readonly form = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    public constructor(
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
-        private router: Router) {
-    }
-
-    submit(): void {
+    protected submit(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
@@ -52,9 +66,8 @@ export class LoginComponent {
                     void this.router.navigateByUrl('/app/home');
                 },
                 error: (error: HttpErrorResponse) => {
-                    this.errorMessage.set(extractErrorMessage(error));
+                    this.errorMessage.set(extractErrorMessage(error, this.translateService));
                 }
             });
     }
 }
-

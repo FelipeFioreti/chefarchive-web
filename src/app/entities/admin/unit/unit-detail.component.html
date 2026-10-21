@@ -1,7 +1,7 @@
 @if (unit(); as unitRef) {
     <div class="entity-page">
         <app-page-header
-                [eyebrow]="'global.menu.units' | translate"
+                [headerText]="'global.menu.units' | translate"
                 [title]="'unit.detail.title' | translate">
             <button
                     type="button"
@@ -34,6 +34,11 @@
                     <article class="entity-detail-item">
                         <span class="entity-detail-item-label">{{ 'global.field.abbreviation' | translate }}</span>
                         <strong class="entity-detail-item-value">{{ unitRef.abbreviation || '-' }}</strong>
+                    </article>
+
+                    <article class="entity-detail-item">
+                        <span class="entity-detail-item-label">{{ 'global.field.showAbbreviation' | translate }}</span>
+                        <strong class="entity-detail-item-value"><app-bool-icon [value]="unitRef.showAbbreviation"/></strong>
                     </article>
                 </div>
             </div>
